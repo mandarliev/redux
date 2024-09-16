@@ -30,6 +30,15 @@
   id: 0
 }
 
+function todos (state = [], action) {
+
+  if (action.type === 'ADD_TODO') {
+    return state.concat([action.todo])
+  }
+
+  return state;
+}
+
 // This function will return us the Store
 function createStore() {
 
@@ -40,6 +49,7 @@ function createStore() {
   // 3. Listen to changes in the State
   // 4. Updating the State
 
+  let state
   let listeners = [];
 
   const getState = () => state;
@@ -50,8 +60,6 @@ function createStore() {
       listeners = listeners.filter((l) => l !== listener);
     };
   };
-
-
 
   return {
     getState,
