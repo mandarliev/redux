@@ -30,6 +30,7 @@
   id: 0
 }
 
+// Reducer function
 function todos (state = [], action) {
 
   if (action.type === 'ADD_TODO') {
@@ -40,7 +41,7 @@ function todos (state = [], action) {
 }
 
 // This function will return us the Store
-function createStore() {
+function createStore(reducer) {
 
   // The Store will have 4 parts:
 
@@ -61,8 +62,18 @@ function createStore() {
     };
   };
 
+  // With the dispatch method you can change the state by passing an object to it
+  // Like this store.dispatch(object)
+  const dispatch = (action) => {
+    // call todos in order to update the state
+    state = reducer(state, action)
+    // after updating the state we need to loop over the listensers and invoke each one of them so that they know the state was updated
+    listeners.forEach((listener) => listener())
+  }
+
   return {
     getState,
     listenToState,
+    dispatch
   };
 }
