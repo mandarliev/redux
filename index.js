@@ -1,43 +1,20 @@
-{
-  type: 'ADD_TODO',
-  todo: {
-    id: 0,
-    name: 'Learn Redux',
-    complete: false,
-  }
-}
-
-{
-  type: 'REMOVE_TODO',
-  id: 0,
-}
-
-{
-  type: 'TOGGLE_TODO',
-  id: 0,
-}
-
-{
-  type: 'ADD_GOAL',
-  goal: {
-    id: 0,
-    name: 'Run a Marathon'
-  }
-}
-
-{
-  type: 'REMOVE_GOAL',
-  id: 0
-}
-
 // Reducer function
 function todos (state = [], action) {
 
-  if (action.type === 'ADD_TODO') {
-    return state.concat([action.todo])
+  switch(action.type) {
+    case 'ADD_TODO' :
+      return state.concat([action.todo])
+    case 'REMOVE_TODO' :
+      return state.filter((todo) => todo.id !== action.id)
+    case 'TOGGLE_TODO' :
+    return state.map((todo) => todo.id !== action.id ? todo : 
+    // ES6 feature
+      Object.assign({}, todo, {complete: !todo.complete})
+    )
+    default :
+      return state;
   }
 
-  return state;
 }
 
 // This function will return us the Store
